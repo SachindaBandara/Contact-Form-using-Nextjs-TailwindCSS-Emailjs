@@ -13,17 +13,17 @@ function EmailForm() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault(); // Prevent page refresh
-  
+
     const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID;
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
     const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
-  
+
     // Check if the entered email is the one you want to block
     if (email === "jmsachindabandara@gmail.com") {
       toast.error("You cannot enter this email address.");
       return;
     }
-  
+
     const data = {
       service_id: serviceId,
       template_id: templateId,
@@ -34,7 +34,7 @@ function EmailForm() {
         message: message,
       },
     };
-  
+
     try {
       const res = await axios.post(
         "https://api.emailjs.com/api/v1.0/email/send",
@@ -49,27 +49,30 @@ function EmailForm() {
       toast.error("Failed to send email.");
     }
   };
-  
-    // const templateParameter = {
-    //   from_email: email,
-    //   to_name: "Sachinda BN",
-    //   message: message,
-    // };
 
-    // emailjs
-    //   .send(serviceId, templateId, templateParameter, publicKey)
-    //   .then((response) => {
-    //     console.log("Email sent successfully!", response);
-    //     setEmail("");
-    //     setMessage("");
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error sending email:", error);
-    //   });
+  // Another way
+  // without using RestAPI
+  //using SDK
+
+  // const templateParameter = {
+  //   from_email: email,
+  //   to_name: "Sachinda BN",
+  //   message: message,
+  // };
+
+  // emailjs
+  //   .send(serviceId, templateId, templateParameter, publicKey)
+  //   .then((response) => {
+  //     console.log("Email sent successfully!", response);
+  //     setEmail("");
+  //     setMessage("");
+  //   })
+  //   .catch((error) => {
+  //     console.log("Error sending email:", error);
+  //   });
 
   return (
     <motion.section
-      // ref={ref}
       id="contact"
       className="mb-20 w-[min(100%,38rem)] text-center scroll-mt-28 sm:mb-60"
       initial={{ opacity: 0 }}
@@ -77,14 +80,6 @@ function EmailForm() {
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
-      <p className=" text-gray-700 -mt-6">
-        Please contact me directly at{" "}
-        <a className="underline" href="mailto:jmsachindabandara@gmail.com">
-          jmsachindabandara@gmail.com
-        </a>{" "}
-        or through this form.
-      </p>
-
       <form className="mt-10 flex flex-col" onSubmit={handleSubmit}>
         <input
           className="text-gray-950  bg-gray-100 h-14 px-4 rounded-lg border border-black/[0.1] "
