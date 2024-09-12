@@ -14,9 +14,9 @@ function EmailForm() {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault(); // Prevent page refresh
   
-    const serviceId = "service_s2mts9w";
-    const templateId = "template_0r3oong";
-    const publicKey = "g5Bgp302-NOmcD_Jn";
+    const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
   
     // Check if the entered email is the one you want to block
     if (email === "jmsachindabandara@gmail.com") {
