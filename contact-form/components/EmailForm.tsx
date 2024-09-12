@@ -30,7 +30,7 @@ function EmailForm() {
       user_id: publicKey,
       template_params: {
         from_email: email,
-        to_name: "Sachinda",
+        to_name: "Sachinda Bandara",
         message: message,
       },
     };
@@ -80,6 +80,9 @@ function EmailForm() {
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
+
+
+
       <form className="mt-10 flex flex-col" onSubmit={handleSubmit}>
         <input
           className="text-gray-950  bg-gray-100 h-14 px-4 rounded-lg border border-black/[0.1] "
