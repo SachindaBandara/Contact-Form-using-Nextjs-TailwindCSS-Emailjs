@@ -19,7 +19,7 @@ function EmailForm() {
     const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 
     // Check if the entered email is the one you want to block
-    if (email === "jmsachindabandara@gmail.com") {
+    if (email === "") { // enter email that do not use
       toast.error("You cannot enter this email address.");
       return;
     }
@@ -30,7 +30,7 @@ function EmailForm() {
       user_id: publicKey,
       template_params: {
         from_email: email,
-        to_name: "Sachinda Bandara",
+        to_name: "" , // enter name that you want
         message: message,
       },
     };
@@ -56,7 +56,7 @@ function EmailForm() {
 
   // const templateParameter = {
   //   from_email: email,
-  //   to_name: "Sachinda BN",
+  //   to_name: "",
   //   message: message,
   // };
 
@@ -80,9 +80,6 @@ function EmailForm() {
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
-
-
-
       <form className="mt-10 flex flex-col" onSubmit={handleSubmit}>
         <input
           className="text-gray-950  bg-gray-100 h-14 px-4 rounded-lg border border-black/[0.1] "
