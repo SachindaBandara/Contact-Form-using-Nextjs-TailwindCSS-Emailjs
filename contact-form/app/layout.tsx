@@ -1,9 +1,9 @@
-
+import EmailForm from "@/components/EmailForm";
 import "./globals.css";
 import { Inter } from "next/font/google";
 //import ActiveSectionContextProvider from "@/context/active-section-context";
 //import Footer from "@/components/footer";
-///import { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +33,9 @@ export default function RootLayout({
           <Footer />
           <Toaster position="top-right" />
         </ActiveSectionContextProvider> */}
+
+        <EmailForm />
+        <Toaster position="top-right" />
       </body>
     </html>
   );

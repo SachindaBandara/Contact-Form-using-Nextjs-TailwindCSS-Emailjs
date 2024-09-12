@@ -1,60 +1,114 @@
-import React from 'react'
-import { motion } from "framer-motion";
-import SubmitBtn from './SubmitBtn';
-import toast from 'react-hot-toast';
+"use client";
 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import SubmitBtn from "./SubmitBtn";
+import toast from "react-hot-toast";
+import emailjs from "@emailjs/browser";
+import axios from "axios";
 
 function EmailForm() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault(); // Prevent page refresh
+  
+    const serviceId = "service_s2mts9w";
+    const templateId = "template_0r3oong";
+    const publicKey = "g5Bgp302-NOmcD_Jn";
+  
+    // Check if the entered email is the one you want to block
+    if (email === "jmsachindabandara@gmail.com") {
+      toast.error("You cannot enter this email address.");
+      return;
+    }
+  
+    const data = {
+      service_id: serviceId,
+      template_id: templateId,
+      user_id: publicKey,
+      template_params: {
+        from_email: email,
+        to_name: "Sachinda",
+        message: message,
+      },
+    };
+  
+    try {
+      const res = await axios.post(
+        "https://api.emailjs.com/api/v1.0/email/send",
+        data,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      setEmail("");
+      setMessage("");
+      toast.success("Email sent successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send email.");
+    }
+  };
+  
+    // const templateParameter = {
+    //   from_email: email,
+    //   to_name: "Sachinda BN",
+    //   message: message,
+    // };
+
+    // emailjs
+    //   .send(serviceId, templateId, templateParameter, publicKey)
+    //   .then((response) => {
+    //     console.log("Email sent successfully!", response);
+    //     setEmail("");
+    //     setMessage("");
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error sending email:", error);
+    //   });
+
   return (
     <motion.section
-    // ref={ref}
-    id="contact"
-    className="mb-20 w-[min(100%,38rem)] text-center scroll-mt-28 sm:mb-60"
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    transition={{ duration: 1 }}
-    viewport={{ once: true }}
-  >
-  Contact Me
-    <p className=" text-gray-700 -mt-6">
-      Please contact me directly at{" "}
-      <a className="underline" href="mailto:jmsachindabandara@gmail.com">
-        jmsachindabandara@gmail.com
-      </a>{" "}
-      or through this form.
-    </p>
-
-    <form
-      className="mt-10 flex flex-col"
-      action={async (formData) => {
-        const { data, error } = await sendEmail(formData);
-
-        if (error) {
-          toast.error(error);
-          return;
-        }
-        toast.success("Email sent successfully! ");
-      }}
+      // ref={ref}
+      id="contact"
+      className="mb-20 w-[min(100%,38rem)] text-center scroll-mt-28 sm:mb-60"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      viewport={{ once: true }}
     >
-      <input
-        className="text-gray-950  bg-gray-100 h-14 px-4 rounded-lg border border-black/[0.1] "
-        name="senderEmail"
-        type="email"
-        placeholder="Your email"
-        required
-        maxLength={500}
-      />
-      <textarea
-        className="text-gray-950 bg-gray-100 h-52 my-3 rounded-lg border border-black/[0.1] p-4"
-        name="message"
-        placeholder="Your message"
-        required
-        maxLength={5000}
-      />
-      <SubmitBtn />
-    </form>
-  </motion.section>
-  )
+      <p className=" text-gray-700 -mt-6">
+        Please contact me directly at{" "}
+        <a className="underline" href="mailto:jmsachindabandara@gmail.com">
+          jmsachindabandara@gmail.com
+        </a>{" "}
+        or through this form.
+      </p>
+
+      <form className="mt-10 flex flex-col" onSubmit={handleSubmit}>
+        <input
+          className="text-gray-950  bg-gray-100 h-14 px-4 rounded-lg border border-black/[0.1] "
+          name="senderEmail"
+          type="email"
+          placeholder="Your email"
+          required
+          maxLength={500}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <textarea
+          className="text-gray-950 bg-gray-100 h-52 my-3 rounded-lg border border-black/[0.1] p-4"
+          name="message"
+          placeholder="Your message"
+          required
+          maxLength={5000}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <SubmitBtn />
+      </form>
+    </motion.section>
+  );
 }
 
-export default EmailForm
+export default EmailForm;
